@@ -74,5 +74,6 @@ chrome.declarativeNetRequest.getDynamicRules((rules) => {
     console.log("All blocked sites have been cleared!");
   });
 });
+```
 
 3. All blocked sites will be immediately unblocked, and tabs will load normally.
