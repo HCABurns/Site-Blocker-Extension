@@ -25,11 +25,11 @@ Works in Chrome, Brave, Opera, and other Chromium-based browsers.
 
 1. Download or clone the extension folder to your computer.  
    The folder should contain:
-   popup.html
-   popup.js
-   service_worker.js
-   manifest.json 
-   /icons
+   - popup.html
+   - popup.js
+   - service_worker.js
+   - manifest.json 
+   - /icons
 
 
 2. Open Chrome (or Brave/Opera) and navigate to: chrome://extensions
