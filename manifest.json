@@ -1,11 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Site Blocker",
+  "description":"Block any website with a simple click of a button.",
   "version": "0.5",
   "permissions": [
-    "tabs",
-    "storage",
-    "declarativeNetRequest"
+  "tabs",
+  "storage",
+  "declarativeNetRequest",
+  "alarms"
   ],
   "action": {
     "default_popup": "popup.html"

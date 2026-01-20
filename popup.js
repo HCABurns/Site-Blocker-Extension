@@ -19,16 +19,40 @@
   siteEl.textContent = domain;
 
   blockBtn.addEventListener("click", () => {
-    statusEl.classList.add("visible");
-    statusEl.textContent = "Blocking…";
+  statusEl.classList.add("visible");
+  statusEl.style.display = "block";
+  statusEl.textContent = "Blocking forever…";
 
-    chrome.runtime.sendMessage(
-    { type: "BLOCK_SITE", domain },
-    () => {
-      statusEl.textContent = "Blocked!";
-      chrome.tabs.reload(tab.id);
+  chrome.runtime.sendMessage(
+    { type: "BLOCK_SITE", domain, durationMinutes: null },
+    (res) => {
+      if (res?.success) {
+        statusEl.textContent = "Blocked!";
+        chrome.tabs.reload(tab.id);
+      } else {
+        statusEl.textContent = "Already blocked";
+      }
     }
-    );
-  });
+  );
+});
+
+document.getElementById("block30").addEventListener("click", () => {
+  statusEl.classList.add("visible");
+  statusEl.style.display = "block";
+  statusEl.textContent = "Blocking for 1 minute…";
+
+  chrome.runtime.sendMessage(
+    { type: "BLOCK_SITE", domain, durationMinutes: 1 },
+    (res) => {
+      if (res?.success) {
+        statusEl.textContent = "Blocked for 1 min";
+        chrome.tabs.reload(tab.id);
+      } else {
+        statusEl.textContent = "Already blocked";
+      }
+    }
+  );
+});
+
 })();
 
