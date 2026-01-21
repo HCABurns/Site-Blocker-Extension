@@ -1,14 +1,10 @@
-// -------------------------------
-// Ensure cleanup alarm always exists (MV3-safe)
-// -------------------------------
+// Ensure cleanup alarm always exists.
 chrome.alarms.create("cleanup-expired-blocks", {
   delayInMinutes: 1,
   periodInMinutes: 1
 });
 
-// -------------------------------
-// Alarm handler: remove expired blocks
-// -------------------------------
+// Alarm handler to remove expired blocks
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name !== "cleanup-expired-blocks") return;
 
@@ -17,9 +13,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   const { blocks = [] } = await chrome.storage.local.get("blocks");
   const now = Date.now();
 
-  const expired = blocks.filter(
-    b => b.expiresAt !== null && b.expiresAt <= now
-  );
+  const expired = blocks.filter(b => b.expiresAt !== null && b.expiresAt <= now);
 
   if (!expired.length) {
     console.log("No expired blocks");
@@ -34,9 +28,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   });
 
   // Persist remaining blocks
-  const remaining = blocks.filter(
-    b => !expired.includes(b)
-  );
+  const remaining = blocks.filter(b => !expired.includes(b));
   await chrome.storage.local.set({ blocks: remaining });
 
   // Force re-navigation for affected tabs
@@ -59,9 +51,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   console.log("Expired blocks fully removed");
 });
 
-// -------------------------------
-// Message handler: add block
-// -------------------------------
+// Message handler: Add website to block
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type !== "BLOCK_SITE") return;
 
@@ -78,10 +68,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
     // Generate rule ID
     const rules = await chrome.declarativeNetRequest.getDynamicRules();
-    const ruleId =
-      rules.length > 0
-        ? Math.max(...rules.map(r => r.id)) + 1
-        : 1;
+    const ruleId = rules.length > 0 ? Math.max(...rules.map(r => r.id)) + 1 : 1;
 
     // Add blocking rule
     await chrome.declarativeNetRequest.updateDynamicRules({
@@ -96,12 +83,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       }]
     });
 
-    // Correct expiry math
-    const expiresAt =
-      durationMinutes != null
-        ? Date.now() + durationMinutes * 0.2 * 1000
-        : null;
+    // Calculate expiry.
+    const expiresAt = durationMinutes != null ? Date.now() + durationMinutes * 60 * 1000 : null;
 
+    // Add to the list.
     blocks.push({ domain, ruleId, expiresAt });
     await chrome.storage.local.set({ blocks });
 
