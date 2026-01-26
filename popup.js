@@ -1,22 +1,47 @@
-function getTime(remainingMs){
-    const totalSeconds = Math.max(0, Math.floor(remainingMs / 1000));
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+/**
+ * Converts a remaining time duration (in milliseconds) into a
+ * human-readable string suitable for UI display.
+ *
+ * The output format automatically adapts based on the size of the duration:
+ * - Days + hours (e.g. "2 days and 3 hours")
+ * - Hours + minutes
+ * - Minutes + seconds
+ * - Seconds only
+ *
+ * Pluralization is handled automatically.
+ *
+ * @param {number} remainingMs
+ *   The remaining time in milliseconds.
+ *   Values <= 0 will be treated as 0.
+ *
+ * @returns {string}
+ *   A formatted, human-readable duration string.
+ */
+function getTime(remainingMs) {
+  // Convert milliseconds to seconds.
+  const totalSeconds = Math.max(0, Math.floor(remainingMs / 1000));
 
-    if (days > 0){
-      return `${days} day${days !== 1 ? "s" : ""} and ${hours} hour${hours !== 1 ? "s" : ""}`
-    }
-    else if (minutes > 60){
-      return `${hours} hour${hours !== 1 ? "s" : ""} and ${minutes} minutes${minutes !== 1 ? "s" : ""}`
-    }
-    else if (minutes > 0){
-      return `${minutes} minute${minutes !== 1 ? "s" : ""} and ${seconds} second${seconds !== 1 ? "s" : ""}`
-    }else{
-      return `${seconds} second${seconds !== 1 ? "s" : ""}`
-    }
+  // Break total seconds into time units.
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  // Return largest and second largest units from the countdown.
+  if (days > 0) {
+    return `${days} day${days !== 1 ? "s" : ""} and ` + `${hours} hour${hours !== 1 ? "s" : ""}`;
+  }
+  else if (minutes > 60) {
+    return `${hours} hour${hours !== 1 ? "s" : ""} and ` + `${minutes} minute${minutes !== 1 ? "s" : ""}`;
+  }
+  else if (minutes > 0) {
+    return `${minutes} minute${minutes !== 1 ? "s" : ""} and ` + `${seconds} second${seconds !== 1 ? "s" : ""}`;
+  }
+  else {
+    return `${seconds} second${seconds !== 1 ? "s" : ""}`;
+  }
 }
+
 
 (async () => {
   const siteEl = document.getElementById("currentSite");
