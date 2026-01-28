@@ -89,6 +89,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     // Add to the list.
     blocks.push({ domain, ruleId, expiresAt });
     await chrome.storage.local.set({ blocks });
+    // Sent message blocked site is added so update the blocked list.
+    chrome.runtime.sendMessage({
+      type: "BLOCKED_SITE_ADDED",
+      domain,
+      expiresAt
+    });
 
     sendResponse({ success: true });
   })();
