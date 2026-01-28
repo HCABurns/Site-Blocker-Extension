@@ -101,16 +101,16 @@
     }
   
     .status {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity 0.2s ease, max-height 0.2s ease;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.2s ease, max-height 0.2s ease;
     }
 
     .status.visible {
-    opacity: 1;
-    max-height: 40px;
-    margin-top: 10px;
+      opacity: 1;
+      max-height: 40px;
+      margin-top: 10px;
     }
 
     .footer {
@@ -120,6 +120,60 @@
       color: var(--muted);
       text-align: center;
     }
+
+    #blockedList {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    #blockedList.open {
+      max-height: 300px;
+    }
+
+    .footer-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 10px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    #arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .footer-btn.open #arrow {
+      transform: rotate(180deg);
+    }
+
+    #blockedSites {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .blocked-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+  }
+
+  .blocked-item span:last-child {
+    color: #6b7280;
+  }
+
+  .empty {
+    color: #9ca3af;
+    font-style: italic;
+  }
+
+
   </style>
 </head>
 
@@ -152,6 +206,14 @@
   </div>
 
   <div class="footer">
+      <button id="toggleBlocked" class="footer-btn">
+      <span>Blocked sites</span>
+      <span id="arrow">▼</span>
+    </button>
+
+    <div id="blockedList" class="collapsed">
+      <ul></ul>
+    </div>
     Currently In Development...
   </div>
 
