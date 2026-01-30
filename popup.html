@@ -91,7 +91,7 @@
       cursor: pointer;
     }
 
-    .block-btn {
+    .btn {
       background: var(--primary);
       color: #fff;
     }
@@ -168,10 +168,24 @@
     color: #6b7280;
   }
 
-  .empty {
-    color: #9ca3af;
-    font-style: italic;
+  #groupsPanel {
+    border-top: 1px solid #e5e7eb;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.25s ease;
   }
+
+  /* Open state */
+  #groupsPanel.open {
+    max-height: 300px; /* large enough to fit content */
+  }
+
+.group-create-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
 
 
   </style>
@@ -196,7 +210,7 @@
           <option value="10080">7 days</option>
           <option value="perm">Forever</option>
         </select>
-        <button class="block-btn" id="blockBtn">
+        <button class="btn" id="blockBtn">
           Block this site
         </button>
       </div>
@@ -206,6 +220,8 @@
   </div>
 
   <div class="footer">
+      
+
       <button id="toggleBlocked" class="footer-btn">
       <span>Blocked sites</span>
       <span id="arrow">▼</span>
@@ -214,9 +230,30 @@
     <div id="blockedList" class="collapsed">
       <ul></ul>
     </div>
+
+    <button id="toggleGroups" class="footer-btn">
+      <span>Manage Groups</span>
+      <span id="arrow">▼</span>
+    </button>
+
+    <div id="groupsPanel" class="collapsed">
+      <div id="groupCreateRow" class="group-create-row">
+        <input
+          id="groupNameInput"
+          type="text"
+          placeholder="New group name"
+          autocomplete="off"
+        />
+        <button id="createGroupBtn" class = "btn">Create</button>
+      </div>
+    <ul id="groupList"></ul>
+    </div>
+
+
     Currently In Development...
   </div>
 
   <script src="popup.js"></script>
+  <script src="groups.js"></script>
 </body>
 </html>

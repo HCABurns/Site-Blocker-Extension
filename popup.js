@@ -54,6 +54,10 @@ function getTime(remainingMs) {
   const toggleBtn = document.getElementById("toggleBlocked");
   const blockedListEl = document.getElementById("blockedList");
 
+  const groupToggleBtn = document.getElementById("toggleGroups");
+  //const groupListEl = document.getElementById("groupList");
+
+
   // Toggle blocked pages panel.
   toggleBtn.addEventListener("click", () => {
     const isOpen = blockedListEl.classList.toggle("open");
@@ -115,7 +119,7 @@ function getTime(remainingMs) {
       if (expiresAt === "null") return;
 
       const remaining = expiresAt - now;
-      span.textContent = remaining <= 0 ? "Site unblocked!" : getTime(remaining);
+      span.textContent = remaining <= 0 ? "Page Unblocked!" : getTime(remaining);
     });
   }
 
@@ -144,6 +148,37 @@ function getTime(remainingMs) {
   // Get the domain and display the domain in the popup.
   const domain = new URL(tab.url).hostname;
   siteEl.textContent = domain;
+
+
+  /*
+  * The following code is for the dealing with groups.
+  */
+  /*function createGroup(name) {
+    chrome.runtime.sendMessage(
+      { type: "CREATE_GROUP", name },
+      (res) => {
+        if (res?.success) {
+          console.log("Group created");
+          // todo: Update the graphic
+        } else {
+          // todo: Update the graphic
+          console.error("Failed to create group:", res?.reason);
+        }
+      }
+    );
+  }
+  */
+
+  // Toggle groups panel.
+  groupToggleBtn.addEventListener("click", () => {
+    //createGroup("HELP ME!")
+    groupsButtonToggle(groupToggleBtn)
+  });
+
+
+  /*
+   * The following code is for the block website button.
+  **/
 
   // Event listener for the button to block site.
   blockBtn.addEventListener("click", () => {

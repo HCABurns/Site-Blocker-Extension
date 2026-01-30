@@ -51,7 +51,7 @@ Works in Chrome, Brave, Opera, and other Chromium-based browsers.
 - Block the current site permanently  
 - Block the current site temporarily (e.g., 30 minutes)  
 3. If a temporary block expires, the site will automatically reload.  
-4. Check the blocked site list (if implemented) to see remaining durations.
+4. Check the blocked site list to see remaining durations.
 
 ---
 
