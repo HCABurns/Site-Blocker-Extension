@@ -1,180 +1,10 @@
-
-<!--
-<!DOCTYPE html>
-<html>
-  <body>
-    <button id="blockBtn">Block this site</button>
-    <p id="status"></p>
-    <script src="popup.js"></script>
-  </body>
-</html>
--->
-
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="style.css">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Site Blocker</title>
-
-  <style>
-    :root {
-      --bg: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --primary: #ef4444;
-      --primary-hover: #dc2626;
-      --border: #e5e7eb;
-      --radius: 10px;
-    }
-
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                   "Segoe UI", Roboto, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      width: 300px;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .container {
-      padding: 16px;
-    }
-
-    .header {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 16px;
-    }
-
-    .title {
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .subtitle {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-
-    .site {
-      font-size: 14px;
-      font-weight: 500;
-      word-break: break-all;
-    }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    button {
-      flex: 1;
-      border: none;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    .block-btn {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    .block-btn:hover {
-      background: var(--primary-hover);
-    }
-  
-    .status {
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: opacity 0.2s ease, max-height 0.2s ease;
-    }
-
-    .status.visible {
-      opacity: 1;
-      max-height: 40px;
-      margin-top: 10px;
-    }
-
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 10px 16px;
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    #blockedList {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.25s ease;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    #blockedList.open {
-      max-height: 300px;
-    }
-
-    .footer-btn {
-      width: 100%;
-      background: none;
-      border: none;
-      padding: 10px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-
-    #arrow {
-      transition: transform 0.2s ease;
-    }
-
-    .footer-btn.open #arrow {
-      transform: rotate(180deg);
-    }
-
-    #blockedSites {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .blocked-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    font-size: 13px;
-  }
-
-  .blocked-item span:last-child {
-    color: #6b7280;
-  }
-
-  .empty {
-    color: #9ca3af;
-    font-style: italic;
-  }
-
-
-  </style>
 </head>
 
 <body>
@@ -196,7 +26,7 @@
           <option value="10080">7 days</option>
           <option value="perm">Forever</option>
         </select>
-        <button class="block-btn" id="blockBtn">
+        <button class="btn" id="blockBtn">
           Block this site
         </button>
       </div>
@@ -214,9 +44,32 @@
     <div id="blockedList" class="collapsed">
       <ul></ul>
     </div>
+
+    <button id="toggleGroups" class="footer-btn">
+      <span>Manage Groups</span>
+      <span id="arrow">▼</span>
+    </button>
+
+    <div id="groupsPanel" class="collapsed">
+      <div id="groupCreateRow" class="group-create-row">
+        <input
+          id="groupNameInput"
+          type="text"
+          placeholder="New group name"
+          autocomplete="off"
+        />
+        <button id="createGroupBtn" class = "btn">Create</button>
+      </div>
+    <ul id="groupList"></ul>
+    </div>
+
+
     Currently In Development...
   </div>
 
-  <script src="popup.js"></script>
+  <script type="module" src="popup.js"></script>
+  <script type="module" src="groups.js"></script>
+  <script type="module" src="blocking.js"></script>
+  <script type="module" src="time.js"></script>
 </body>
 </html>
